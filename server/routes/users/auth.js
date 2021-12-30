@@ -2,6 +2,12 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
 const UserModel = require("../../db/models/user");
+const { verifyToken } = require("../../middelware/verifyToken");
+
+router.get("/checkToken", verifyToken, (req, res, next) => {
+  req.user.succes = true;
+  res.status(200).json(req.user);
+});
 
 router.post("/login", (req, res, next) => {
   UserModel.findOne(
@@ -24,6 +30,7 @@ router.post("/login", (req, res, next) => {
             {
               id: other._id,
               rang: other.rang,
+              username: other.username,
             },
             process.env.JWT_SEC,
             { expiresIn: process.env.JWT_EXP }
@@ -43,4 +50,5 @@ router.post("/login", (req, res, next) => {
     }
   );
 });
+
 module.exports = router;
