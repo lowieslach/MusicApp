@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const UserModel = require("../../db/models/user");
 const { verifyToken } = require("../../middelware/verifyToken");
+const { WrongCredentialsError } = require("../../js/error/error");
 
 router.get("/checkToken", verifyToken, (req, res, next) => {
   req.user.succes = true;
@@ -16,10 +17,7 @@ router.post("/login", (req, res, next) => {
     (err, user) => {
       if (err) next(err);
       if (!user) {
-        let err = new Error("Wrong credentials");
-        err.status = "fail";
-        err.statusCode = 403;
-        next(err);
+        next(new WrongCredentialsError());
         return;
       }
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -41,10 +39,7 @@ router.post("/login", (req, res, next) => {
             user: other,
           });
         } else {
-          let err = new Error("Wrong credentials");
-          err.status = "fail";
-          err.statusCode = 403;
-          next(err);
+          next(new WrongCredentialsError());
         }
       });
     }
