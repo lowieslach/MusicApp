@@ -2,9 +2,9 @@
 
 MusicPlayer
 
-nodejs
-mongodb
-mongoose
-express
-react
+nodejs,
+express,
+mongodb,
+mongoose,
+react,
 material/ui
