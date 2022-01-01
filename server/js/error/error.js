@@ -1,14 +1,11 @@
 class DefaultError {
   constructor(type = "", statusCode = 500, data = {}) {
-    this.error = true;
     this.type = type;
     this.statusCode = statusCode;
     this.data = data;
   }
   response(res) {
-    res
-      .status(this.statusCode)
-      .send({ succes: false, type: this.type, data: this.data });
+    res.status(this.statusCode).send({ type: this.type, data: this.data });
   }
 }
 
@@ -33,7 +30,7 @@ class DuplicateKeyError extends DefaultError {
 }
 class NoTokenEror extends DefaultError {
   constructor() {
-    super("NOTOKEN", 401, { message: "No token in header" });
+    super("NOTOKEN", 401, { message: "No token" });
   }
 }
 class InvalidToken extends DefaultError {

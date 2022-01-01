@@ -6,7 +6,6 @@ const { verifyToken } = require("../../middelware/verifyToken");
 const { WrongCredentialsError } = require("../../js/error/error");
 
 router.get("/checkToken", verifyToken, (req, res, next) => {
-  req.user.succes = true;
   res.status(200).json(req.user);
 });
 
@@ -34,7 +33,6 @@ router.post("/login", (req, res, next) => {
             { expiresIn: process.env.JWT_EXP }
           );
           res.status(200).json({
-            succes: true,
             token,
             user: other,
           });

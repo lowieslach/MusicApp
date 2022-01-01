@@ -13,7 +13,7 @@ router.post("/register", (req, res, next) => {
       next(err);
       return;
     }
-    res.status(200).json({ succes: true });
+    res.status(200).json({});
   });
 });
 
