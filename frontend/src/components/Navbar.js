@@ -9,51 +9,62 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { Cancel, Settings, Notifications, Search } from "@material-ui/icons";
+import { Cancel, Settings, Notifications, Search } from "@mui/icons-material";
 import { useState } from "react";
 
+import AccountMenu from "./AcoountMenu.js";
+
 const Navbar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const [searchOpen, setSearchOpen] = useState(false);
+
   const classes = useStyles({ searchOpen });
   return (
-    <AppBar position="fixed">
-      <Toolbar className={classes.toolbar}>
-        <Typography variant="h6">Music</Typography>
-        <div className={classes.search}>
-          <Search className={classes.searchIcon} />
-          <InputBase placeholder="Search..." className={classes.input} />
-          {searchOpen && (
+    <>
+      <AppBar position="sticky">
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h6">Music</Typography>
+          <div className={classes.search}>
+            <Search className={classes.searchIcon} />
+            <InputBase placeholder="Search..." className={classes.input} />
+            {searchOpen && (
+              <IconButton color="inherit" onClick={() => setSearchOpen(false)}>
+                <Cancel />
+              </IconButton>
+            )}
+          </div>
+          <div className={classes.icons}>
             <IconButton
               color="inherit"
-              onClick={() => setSearchOpen(false)}
-              className={classes.cancel}
+              onClick={() => setSearchOpen(true)}
+              className={classes.searchButton}
             >
-              <Cancel />
+              <Search className={classes.searchButton} />
             </IconButton>
-          )}
-        </div>
-        <div className={classes.icons}>
-          <IconButton
-            color="inherit"
-            onClick={() => setSearchOpen(true)}
-            className={classes.searchButton}
-          >
-            <Search className={classes.searchButton} />
-          </IconButton>
-          <IconButton color="inherit">
-            <Badge badgeContent={2} color="secondary">
-              <Notifications />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
-            <Settings />
-          </IconButton>
-          <IconButton>
-            <Avatar alt="USER NAME" src="" />
-          </IconButton>
-        </div>
-      </Toolbar>
-    </AppBar>
+            <IconButton color="inherit">
+              <Badge badgeContent={2} color="secondary">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton color="inherit">
+              <Settings />
+            </IconButton>
+            <IconButton onClick={handleClick}>
+              <Avatar />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <AccountMenu anchorEl={anchorEl} handleClose={handleClose} />
+    </>
   );
 };
 
@@ -82,10 +93,6 @@ const useStyles = makeStyles((theme) => ({
   input: {
     color: "white",
     width: "100%",
-  },
-  cancel: {
-    margin: "0px",
-    paddin: "0px",
   },
   searchButton: {
     display: "none",
