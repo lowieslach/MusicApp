@@ -1,5 +1,11 @@
+import Navbar from "./components/Navbar.js";
+
 function App() {
-  return <div className="App">Music app</div>;
+  return (
+    <div className="App">
+      <Navbar />
+    </div>
+  );
 }
 
 export default App;
