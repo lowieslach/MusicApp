@@ -29,7 +29,7 @@ const Navbar = () => {
   const classes = useStyles({ searchOpen });
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6">Music</Typography>
           <div className={classes.search}>
