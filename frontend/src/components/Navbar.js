@@ -12,7 +12,7 @@ import {
 import { Cancel, Settings, Notifications, Search } from "@mui/icons-material";
 import { useState } from "react";
 
-import AccountMenu from "./AcoountMenu.js";
+import AccountMenu from "./AccountMenu.js";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
