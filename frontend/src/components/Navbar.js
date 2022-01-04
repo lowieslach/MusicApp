@@ -27,6 +27,7 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
 
   const classes = useStyles({ searchOpen });
+  //position=static
   return (
     <>
       <AppBar position="fixed">
