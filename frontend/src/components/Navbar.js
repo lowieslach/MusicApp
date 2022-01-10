@@ -7,23 +7,18 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Modal,
-  Box,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core";
 import {
-  Cancel,
-  Settings,
-  Notifications,
-  Search,
-  Brightness4 as Brightness4Icon,
-  Brightness7 as Brightness7Icon,
+  Cancel as CancelIcon,
+  Settings as SettingsIcon,
+  Notifications as NotificationsIcon,
+  Search as SearchIcon,
 } from "@mui/icons-material";
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import AccountMenu from "./AccountMenu.js";
-import { ColorModeContext } from "../App.js";
+import SettingsMenu from "./SettingsMenu.js";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,21 +27,18 @@ const Navbar = () => {
   const [settinsOpen, setSettinsOpen] = useState(false);
 
   const classes = useStyles({ searchOpen });
-
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
   //position=static
   return (
     <>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6">Music</Typography>
+          <Typography variant="h6">MUSIC</Typography>
           <div className={classes.search}>
-            <Search className={classes.searchIcon} />
+            <SearchIcon className={classes.searchIcon} />
             <InputBase placeholder="Search..." className={classes.input} />
             {searchOpen && (
               <IconButton color="inherit" onClick={() => setSearchOpen(false)}>
-                <Cancel />
+                <CancelIcon />
               </IconButton>
             )}
           </div>
@@ -56,15 +48,15 @@ const Navbar = () => {
               onClick={() => setSearchOpen(true)}
               className={classes.searchButton}
             >
-              <Search className={classes.searchButton} />
+              <SearchIcon className={classes.searchButton} />
             </IconButton>
             <IconButton color="inherit">
               <Badge badgeContent={2} color="secondary">
-                <Notifications />
+                <NotificationsIcon />
               </Badge>
             </IconButton>
             <IconButton color="inherit" onClick={() => setSettinsOpen(true)}>
-              <Settings />
+              <SettingsIcon />
             </IconButton>
             <IconButton
               onClick={(event) => {
@@ -82,44 +74,7 @@ const Navbar = () => {
           setAnchorEl(null);
         }}
       />
-      <Modal open={settinsOpen} onClose={() => setSettinsOpen(false)}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "0",
-            right: "0",
-            width: 300,
-            height: "100vh",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            padding: theme.spacing(2),
-            color: "text.primary",
-          }}
-        >
-          <Typography variant="h4" component="h2">
-            Settings
-          </Typography>
-          <Box
-            sx={{
-              width: "100%",
-              color: "text.primary",
-            }}
-          >
-            {theme.palette.mode} mode
-            <IconButton
-              sx={{ ml: 1 }}
-              onClick={colorMode.toggleColorMode}
-              color="inherit"
-            >
-              {theme.palette.mode === "dark" ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
-            </IconButton>
-          </Box>
-        </Box>
-      </Modal>
+      <SettingsMenu open={settinsOpen} setOpen={setSettinsOpen} />
     </>
   );
 };
