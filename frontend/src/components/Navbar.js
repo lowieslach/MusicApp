@@ -4,29 +4,37 @@ import {
   Avatar,
   Badge,
   InputBase,
-  makeStyles,
   Toolbar,
   Typography,
   IconButton,
-} from "@material-ui/core";
-import { Cancel, Settings, Notifications, Search } from "@mui/icons-material";
-import { useState } from "react";
+  Modal,
+  Box,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { makeStyles } from "@material-ui/core";
+import {
+  Cancel,
+  Settings,
+  Notifications,
+  Search,
+  Brightness4 as Brightness4Icon,
+  Brightness7 as Brightness7Icon,
+} from "@mui/icons-material";
+import { useState, useContext } from "react";
 
 import AccountMenu from "./AccountMenu.js";
+import { ColorModeContext } from "../App.js";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const [searchOpen, setSearchOpen] = useState(false);
+  const [settinsOpen, setSettinsOpen] = useState(false);
 
   const classes = useStyles({ searchOpen });
+
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
   //position=static
   return (
     <>
@@ -55,16 +63,63 @@ const Navbar = () => {
                 <Notifications />
               </Badge>
             </IconButton>
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={() => setSettinsOpen(true)}>
               <Settings />
             </IconButton>
-            <IconButton onClick={handleClick}>
+            <IconButton
+              onClick={(event) => {
+                setAnchorEl(event.currentTarget);
+              }}
+            >
               <Avatar />
             </IconButton>
           </div>
         </Toolbar>
       </AppBar>
-      <AccountMenu anchorEl={anchorEl} handleClose={handleClose} />
+      <AccountMenu
+        anchorEl={anchorEl}
+        handleClose={() => {
+          setAnchorEl(null);
+        }}
+      />
+      <Modal open={settinsOpen} onClose={() => setSettinsOpen(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "0",
+            right: "0",
+            width: 300,
+            height: "100vh",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            padding: theme.spacing(2),
+            color: "text.primary",
+          }}
+        >
+          <Typography variant="h4" component="h2">
+            Settings
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              color: "text.primary",
+            }}
+          >
+            {theme.palette.mode} mode
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={colorMode.toggleColorMode}
+              color="inherit"
+            >
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };
@@ -96,9 +151,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   searchButton: {
-    display: "none",
-    [theme.breakpoints.down("sm")]: {
-      display: "block",
+    display: "block",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
     },
   },
   icons: {

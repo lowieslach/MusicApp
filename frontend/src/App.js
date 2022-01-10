@@ -1,13 +1,40 @@
+import * as React from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 import Navbar from "./components/Navbar.js";
 import LoginPage from "./pages/LoginPage.js";
 import RegisterPage from "./pages/RegisterPage.js";
 
-function App() {
+export const ColorModeContext = React.createContext({
+  toggleColorMode: () => {},
+});
+
+export default function MyApp() {
+  const [mode, setMode] = React.useState("light");
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
+  );
+
   return (
-    <div className="App">
-      <RegisterPage />
-    </div>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <Navbar />
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
-
-export default App;
