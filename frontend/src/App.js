@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Container, CssBaseline } from "@mui/material";
 
 import Navbar from "./components/Navbar.js";
 import LoginPage from "./pages/LoginPage.js";
@@ -10,7 +11,7 @@ export const ColorModeContext = React.createContext({
 });
 
 export default function MyApp() {
-  const [mode, setMode] = React.useState("light");
+  const [mode, setMode] = React.useState("dark");
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -33,7 +34,10 @@ export default function MyApp() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <Navbar />
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Navbar />
+        </Container>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
