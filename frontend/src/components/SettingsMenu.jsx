@@ -6,7 +6,7 @@ import {
 import { useContext } from "react";
 import { useTheme } from "@mui/material/styles";
 
-import { ColorModeContext } from "../App.js";
+import { ColorModeContext } from "../App";
 
 export default function SettingsMenu({ open, setOpen }) {
   const theme = useTheme();

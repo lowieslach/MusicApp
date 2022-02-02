@@ -3,10 +3,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Container, CssBaseline } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/Navbar.js";
-import LoginPage from "./pages/LoginPage.js";
-import RegisterPage from "./pages/RegisterPage.js";
-import { AuthProvider, RequireAuth } from "./components/auth.js";
+import Navbar from "./components/Navbar";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import { AuthProvider, RequireAuth } from "./components/auth";
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},

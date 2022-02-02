@@ -1,7 +1,7 @@
 import { useState, createContext, useContext } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 
-import { authApi } from "../js/api/auth.js";
+import { authApi } from "../js/api/auth";
 
 //https://stackblitz.com/github/remix-run/react-router/tree/main/examples/auth?file=src%2FApp.tsx
 

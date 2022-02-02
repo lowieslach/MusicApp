@@ -17,8 +17,8 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 
-import AccountMenu from "./AccountMenu.js";
-import SettingsMenu from "./SettingsMenu.js";
+import AccountMenu from "./AccountMenu";
+import SettingsMenu from "./SettingsMenu";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);

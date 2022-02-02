@@ -1,9 +1,19 @@
 import * as React from "react";
 import { Avatar, Menu, MenuItem, ListItemIcon, Divider } from "@mui/material";
 import { Logout } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "./auth";
 
 export default function AccountMenu({ anchorEl, handleClose }) {
   const open = Boolean(anchorEl);
+
+  let auth = useAuth();
+  let navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.signout(() => navigate("/"));
+  };
 
   return (
     <React.Fragment>
@@ -46,7 +56,7 @@ export default function AccountMenu({ anchorEl, handleClose }) {
           <Avatar /> My account
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
