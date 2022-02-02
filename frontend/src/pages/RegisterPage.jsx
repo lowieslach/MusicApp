@@ -10,18 +10,27 @@ import {
   Typography,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Copyright from "../components/Copyright";
+import { useAuth } from "../components/auth";
 
 export default function SignUp() {
+  let auth = useAuth();
+  let navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
+    const userData = {
+      firstname: data.get("firstName"),
+      lastname: data.get("lastName"),
       email: data.get("email"),
       password: data.get("password"),
+      password2: data.get("password2"),
+    };
+    auth.register(userData, () => {
+      navigate("/login", { replace: true });
     });
   };
 
@@ -88,7 +97,7 @@ export default function SignUp() {
             <TextField
               required
               fullWidth
-              name="confirmPassword"
+              name="password2"
               label="Confirm password"
               type="password"
               id="confirmPassword"

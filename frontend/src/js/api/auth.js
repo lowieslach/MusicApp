@@ -9,4 +9,9 @@ export const authApi = {
     this.isAuthenticated = false;
     setTimeout(callback, 100);
   },
+  register(newUser, callback) {
+    console.log(newUser);
+    this.isAuthenticated = false;
+    setTimeout(callback, 100);
+  },
 };

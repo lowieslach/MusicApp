@@ -24,7 +24,14 @@ export function AuthProvider({ children }) {
     });
   };
 
-  let value = { user, signin, signout };
+  let register = (newUser, callback) => {
+    return authApi.register(newUser, () => {
+      setUser(null);
+      callback();
+    });
+  };
+
+  let value = { user, signin, signout, register };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
